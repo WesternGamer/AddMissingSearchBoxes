@@ -29,16 +29,21 @@ namespace ClientPlugin.Config
             propertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-        private bool enabled = true;
-        // TODO: Implement your config fields
+        private bool factionsSearchboxEnabled = true;
 
-        public bool Enabled
+        public bool FactionsSearchboxEnabled
         {
-            get => enabled;
-            set => SetValue(ref enabled, value);
+            get => factionsSearchboxEnabled;
+            set => SetValue(ref factionsSearchboxEnabled, value);
         }
 
-        // TODO: Encapsulate them as properties
+        private bool chatSearchboxEnabled = true;
+
+        public bool ChatSearchboxEnabled
+        {
+            get => chatSearchboxEnabled;
+            set => SetValue(ref chatSearchboxEnabled, value);
+        }
     }
 }
 

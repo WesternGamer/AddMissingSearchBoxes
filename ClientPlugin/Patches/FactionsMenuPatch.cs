@@ -30,6 +30,11 @@ namespace ClientPlugin.Patches
         private static string searchBoxtext = "";
         private static void Postfix(MyGuiScreenTerminal __instance, MyGuiControlTabPage page)
         {
+            if (!Plugin.Instance.Config.FactionsSearchboxEnabled)
+            {
+                return;
+            }
+
             instance = __instance;
             MyGuiControlSearchBox searchBox = new MyGuiControlSearchBox
             {

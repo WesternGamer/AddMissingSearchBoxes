@@ -29,6 +29,11 @@ namespace ClientPlugin.Patches
 
         private static void Postfix(MyGuiScreenTerminal __instance, MyGuiControlTabPage chatPage)
         {
+            if (!Plugin.Instance.Config.ChatSearchboxEnabled)
+            {
+                return;
+            }
+
             terminalInstance = __instance;
 
             MyGuiControlSearchBox searchBox = new MyGuiControlSearchBox
