@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -528,7 +530,10 @@
     <Compile Include="Logging\LogFormatter.cs" />
     <Compile Include="Logging\PluginLogger.cs" />
     <Compile Include="Patches\FactionsMenuPatch.cs" />
+    <Compile Include="Patches\GridInfoControllerPatch.cs" />
+    <Compile Include="Patches\GridInfoMenuPatch.cs" />
     <Compile Include="Patches\PatchHelpers.cs" />
+    <Compile Include="Patches\SpawnMenuPatch.cs" />
     <Compile Include="Patches\TerminalChatMenuPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

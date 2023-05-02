@@ -134,19 +134,22 @@ namespace ClientPlugin.Patches
             MySession.Static.ChatSystem.ChatHistory.GetFactionHistory(ref list, faction.FactionId);
             foreach (MyUnifiedChatItem item in list)
             {
-                string[] subStrings = searchBoxText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-                if (subStrings.All(s => item.Text.Contains(s, StringComparison.OrdinalIgnoreCase)) == false)
-                {
-                    continue;
-                }
-
                 MyIdentity myIdentity = MySession.Static.Players.TryGetIdentity(item.SenderId);
+
                 if (myIdentity != null)
                 {
+                    string[] subStrings = searchBoxText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    string playerName = myIdentity.DisplayName;
+
+                    if (subStrings.All(s => item.Text.Contains(s, StringComparison.OrdinalIgnoreCase)) == false && subStrings.All(s => playerName.Contains(s, StringComparison.OrdinalIgnoreCase)) == false)
+                    {
+                        continue;
+                    }
+
                     Color relationColor = MyChatSystem.GetRelationColor(item.SenderId);
                     Color channelColor = MyChatSystem.GetChannelColor(item.Channel);
-                    chatHistory.AppendText(myIdentity.DisplayName, "White", chatHistory.TextScale, relationColor);
+                    chatHistory.AppendText(playerName, "White", chatHistory.TextScale, relationColor);
                     chatHistory.AppendText(": ", "White", chatHistory.TextScale, relationColor);
                     chatHistory.AppendText(item.Text, "White", chatHistory.TextScale, channelColor);
                     chatHistory.AppendLine();
@@ -189,7 +192,7 @@ namespace ClientPlugin.Patches
                 {
                     string[] subStrings = searchBoxText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    if (subStrings.All(s => item.Text.Contains(s, StringComparison.OrdinalIgnoreCase)) == false)
+                    if (subStrings.All(s => item.Text.Contains(s, StringComparison.OrdinalIgnoreCase)) == false && subStrings.All(s => item.CustomAuthor.Contains(s, StringComparison.OrdinalIgnoreCase)) == false)
                     {
                         continue;
                     }
@@ -209,19 +212,22 @@ namespace ClientPlugin.Patches
                 }
                 else if (item.Channel == ChatChannel.Global)
                 {
-                    string[] subStrings = searchBoxText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    if (subStrings.All(s => item.Text.Contains(s, StringComparison.OrdinalIgnoreCase)) == false)
-                    {
-                        continue;
-                    }
-
                     MyIdentity myIdentity = MySession.Static.Players.TryGetIdentity(item.SenderId);
+
                     if (myIdentity != null)
                     {
+                        string[] subStrings = searchBoxText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        string playerName = myIdentity.DisplayName;
+
+                        if (subStrings.All(s => item.Text.Contains(s, StringComparison.OrdinalIgnoreCase)) == false && subStrings.All(s => playerName.Contains(s, StringComparison.OrdinalIgnoreCase)) == false)
+                        {
+                            continue;
+                        }
+
                         Color relationColor2 = MyChatSystem.GetRelationColor(item.SenderId);
                         Color channelColor2 = MyChatSystem.GetChannelColor(item.Channel);
-                        chatHistory.AppendText(myIdentity.DisplayName, "White", chatHistory.TextScale, relationColor2);
+                        chatHistory.AppendText(playerName, "White", chatHistory.TextScale, relationColor2);
                         chatHistory.AppendText(": ", "White", chatHistory.TextScale, relationColor2);
                         chatHistory.AppendText(item.Text, "White", chatHistory.TextScale, channelColor2);
                         chatHistory.AppendLine();
@@ -247,19 +253,20 @@ namespace ClientPlugin.Patches
             MySession.Static.ChatSystem.ChatHistory.GetChatbotHistory(ref list);
             foreach (MyUnifiedChatItem item in list)
             {
-                string[] subStrings = searchBoxText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-                if (subStrings.All(s => item.Text.Contains(s, StringComparison.OrdinalIgnoreCase)) == false)
-                {
-                    continue;
-                }
-
                 MyIdentity myIdentity = MySession.Static.Players.TryGetIdentity((item.SenderId != 0L) ? item.SenderId : item.TargetId);
                 if (myIdentity != null)
                 {
                     Vector4 one = Vector4.One;
                     Color white = Color.White;
                     string text = ((item.CustomAuthor.Length > 0) ? item.CustomAuthor : myIdentity.DisplayName);
+
+                    string[] subStrings = searchBoxText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (subStrings.All(s => item.Text.Contains(s, StringComparison.OrdinalIgnoreCase)) == false && subStrings.All(s => text.Contains(s, StringComparison.OrdinalIgnoreCase)) == false)
+                    {
+                        continue;
+                    }
+
                     chatHistory.AppendText(text, "White", chatHistory.TextScale, one);
                     chatHistory.AppendText(": ", "White", chatHistory.TextScale, one);
                     chatHistory.Parse(item.Text, "White", chatHistory.TextScale, white);
