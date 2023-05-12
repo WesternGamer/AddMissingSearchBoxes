@@ -59,10 +59,10 @@ namespace ClientPlugin.Patches
         {
             var codes = new List<CodeInstruction>(instructions);
 
-            var gridBuiltByIdInfo = codes[178].operand;
-            var GridBuiltByIdInfo_GridName = codes[220].operand;
-            var endOfLoop = codes[710].labels[0];
-            var String = codes[220].operand;
+            var gridBuiltByIdInfo = codes[182].operand;
+            var GridBuiltByIdInfo_GridName = codes[225].operand;
+            var endOfLoop = codes[732].labels[0];
+            var String = codes[225].operand;
 
 
             var instructionsToInsert = new List<CodeInstruction>();
@@ -73,7 +73,7 @@ namespace ClientPlugin.Patches
             instructionsToInsert.Insert(2, new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(GridInfoControllerPatch), nameof(GridInfoControllerPatch.ShouldHideGrid))));
             instructionsToInsert.Insert(3, new CodeInstruction(OpCodes.Brtrue, endOfLoop));
 
-            codes.InsertRange(184, instructionsToInsert);
+            codes.InsertRange(183, instructionsToInsert);
             return codes.AsEnumerable();
         }
 
