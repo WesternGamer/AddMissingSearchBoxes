@@ -1,22 +1,15 @@
 ﻿using HarmonyLib;
 using Sandbox.Game.Gui;
 using Sandbox.Game.Localization;
-using Sandbox.Game.Multiplayer;
 using Sandbox.Game.Screens.Helpers;
-using Sandbox.Game.World;
 using Sandbox.Graphics.GUI;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using VRage;
 using VRage.Game.ModAPI;
 using VRage.Utils;
 using VRageMath;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ClientPlugin.Patches
 {
@@ -103,8 +96,6 @@ namespace ClientPlugin.Patches
             filterSelectedMethod.Invoke(controller, null);
         }
 
-        //[HarmonyPrefix]
-        //[HarmonyPatch("Sandbox.Game.Gui.MyTerminalFactionController::AddFaction")]
         public static bool Prefix_AddFaction(IMyFaction faction)
         {
             string[] subStrings = searchBoxtext.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

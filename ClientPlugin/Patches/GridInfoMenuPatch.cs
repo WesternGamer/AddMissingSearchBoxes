@@ -2,12 +2,6 @@
 using Sandbox.Game.Gui;
 using Sandbox.Game.Screens.Helpers;
 using Sandbox.Graphics.GUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using VRage.Utils;
 using VRageMath;
 
@@ -16,14 +10,10 @@ namespace ClientPlugin.Patches
     [HarmonyPatch(typeof(MyGuiScreenTerminal), "CreateInfoPageControls")]
     internal static class GridInfoMenuPatch
     {
-        private static MyGuiScreenTerminal terminalInstance = null;
-
         public static string SearchBoxText = "";
 
-        private static void Postfix(MyGuiScreenTerminal __instance, MyGuiControlTabPage infoPage)
+        private static void Postfix(MyGuiControlTabPage infoPage)
         {
-            terminalInstance = __instance;
-
             if (MyGuiScreenTerminal.InteractedEntity != null)
             {
                 return;

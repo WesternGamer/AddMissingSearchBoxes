@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using Sandbox.Game.Gui;
 using Sandbox.Game.Screens.Helpers;
-using Sandbox.Graphics;
 using Sandbox.Graphics.GUI;
 using System.Linq;
 using System;
@@ -9,7 +8,6 @@ using System.Reflection;
 using VRage.Utils;
 using VRageMath;
 using static Sandbox.Graphics.GUI.MyGuiControlListbox;
-using VRage.Collections;
 using Sandbox.Definitions;
 using System.Text;
 using System.Collections.Generic;
@@ -143,16 +141,18 @@ namespace ClientPlugin.Patches
         private static List<Item> GetSpawnableItems()
         {
             var items = new List<Item>();
-            foreach (MyPhysicalItemDefinition item2 in from MyPhysicalItemDefinition e in from e in MyDefinitionManager.Static.GetAllDefinitions()
-                                                                                          where e is MyPhysicalItemDefinition && e.Public
-                                                                                          select e
-                                                       orderby e.DisplayNameText
-                                                       select e)
+            foreach (MyPhysicalItemDefinition item2 in 
+                from MyPhysicalItemDefinition e in 
+                from e in MyDefinitionManager.Static.GetAllDefinitions()
+                where e is MyPhysicalItemDefinition && e.Public
+                select e
+                orderby e.DisplayNameText
+                select e)
             {
                 if (item2.CanSpawnFromScreen)
                 {
                     string icon = ((item2.Icons != null && item2.Icons.Length != 0) ? item2.Icons[0] : MyGuiConstants.TEXTURE_ICON_FAKE.Texture);
-                    MyGuiControlListbox.Item item = new MyGuiControlListbox.Item(new StringBuilder(item2.DisplayNameText), item2.DisplayNameText, icon, item2);
+                    Item item = new Item(new StringBuilder(item2.DisplayNameText), item2.DisplayNameText, icon, item2);
                     items.Add(item);
                 }
             }
@@ -206,7 +206,7 @@ namespace ClientPlugin.Patches
             {
                 MyStringHash subtypeId = item3.Id.SubtypeId;
                 string text = subtypeId.ToString();
-                items.Add(new MyGuiControlListbox.Item(new StringBuilder(text), text, null, text));
+                items.Add(new Item(new StringBuilder(text), text, null, text));
             }
 
             return items;
@@ -234,7 +234,7 @@ namespace ClientPlugin.Patches
 
             string[] subStrings = newText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            m_materialTypeListbox.Add(new MyGuiControlListbox.Item(MyTexts.Get(MySpaceTexts.SpawnMenu_KeepOriginalMaterial), MyTexts.GetString(MySpaceTexts.SpawnMenu_KeepOriginalMaterial_Tooltip)));
+            m_materialTypeListbox.Add(new Item(MyTexts.Get(MySpaceTexts.SpawnMenu_KeepOriginalMaterial), MyTexts.GetString(MySpaceTexts.SpawnMenu_KeepOriginalMaterial_Tooltip)));
 
             foreach (Item item in VoxelMaterials)
             {
@@ -258,7 +258,7 @@ namespace ClientPlugin.Patches
             {
                 MyStringHash subtypeId = item4.Id.SubtypeId;
                 string text2 = subtypeId.ToString();
-                items.Add(new MyGuiControlListbox.Item(new StringBuilder(text2), text2, null, text2));
+                items.Add(new Item(new StringBuilder(text2), text2, null, text2));
             }
 
             return items;
