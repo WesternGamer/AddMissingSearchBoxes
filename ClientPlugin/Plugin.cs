@@ -45,6 +45,9 @@ namespace ClientPlugin
             var configPath = Path.Combine(MyFileSystem.UserDataPath, "Storage\\PluginData", ConfigFileName);
             config = PersistentConfig<PluginConfig>.Load(Log, configPath);
 
+#if DEBUG
+            Harmony.DEBUG = true;
+#endif
             Log.Debug("Applying Harmony patches");
             Harmony patcher = new Harmony(Name);
 
