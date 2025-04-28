@@ -37,22 +37,6 @@ namespace ClientPlugin.Patches
 
             switch (m_selectedScreen)
             {
-                case 0:
-                    {
-                        MyGuiControlListbox m_physicalObjectListbox = (MyGuiControlListbox)AccessTools.Field("Sandbox.Game.Gui.MyGuiScreenDebugSpawnMenu:m_physicalObjectListbox").GetValue(__instance);
-
-                        MyGuiControlSearchBox searchBox = new MyGuiControlSearchBox
-                        {
-                            OriginAlign = MyGuiDrawAlignEnum.HORISONTAL_LEFT_AND_VERTICAL_TOP,
-                            Position = m_physicalObjectListbox.Position + new Vector2(0, -0.04f)
-                        };
-                        searchBox.Size = new Vector2(m_physicalObjectListbox.Size.X, searchBox.Size.Y);
-                        searchBox.OnTextChanged += ItemSearchbox_TextChanged;
-
-                        __instance.Controls.Add(searchBox);
-
-                        break;
-                    }
                 case 1:
                     {
                         MyGuiControlListbox m_asteroidTypeListbox = (MyGuiControlListbox)AccessTools.Field("Sandbox.Game.Gui.MyGuiScreenDebugSpawnMenu:m_asteroidTypeListbox").GetValue(__instance);
@@ -103,61 +87,6 @@ namespace ClientPlugin.Patches
                         break;
                     }
             }
-        }
-
-        private static void ItemSearchbox_TextChanged(string newText)
-        {
-            MyGuiControlListbox m_physicalObjectListbox = null;
-
-            foreach (MyGuiScreenBase screen in MyScreenManager.Screens)
-            {
-                if (screen.GetType() == AccessTools.TypeByName("Sandbox.Game.Gui.MyGuiScreenDebugSpawnMenu"))
-                {
-                    m_physicalObjectListbox = (MyGuiControlListbox)AccessTools.Field("Sandbox.Game.Gui.MyGuiScreenDebugSpawnMenu:m_physicalObjectListbox").GetValue(screen);
-                        break;
-                }
-            }
-
-            if (ItemSpawnMenuItems == null)
-            {
-                ItemSpawnMenuItems = GetSpawnableItems();
-            }
-
-            m_physicalObjectListbox.Items.Clear();
-
-            string[] subStrings = newText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (Item item in ItemSpawnMenuItems)
-            {
-                if (subStrings.All(s => item.Text.ToString().Contains(s, StringComparison.OrdinalIgnoreCase)) == false)
-                {
-                    continue;
-                }
-
-                m_physicalObjectListbox.Items.Add(item);
-            }
-        }
-
-        private static List<Item> GetSpawnableItems()
-        {
-            var items = new List<Item>();
-            foreach (MyPhysicalItemDefinition item2 in 
-                from MyPhysicalItemDefinition e in 
-                from e in MyDefinitionManager.Static.GetAllDefinitions()
-                where e is MyPhysicalItemDefinition && e.Public
-                select e
-                orderby e.DisplayNameText
-                select e)
-            {
-                if (item2.CanSpawnFromScreen)
-                {
-                    string icon = ((item2.Icons != null && item2.Icons.Length != 0) ? item2.Icons[0] : MyGuiConstants.TEXTURE_ICON_FAKE.Texture);
-                    Item item = new Item(new StringBuilder(item2.DisplayNameText), item2.DisplayNameText, icon, item2);
-                    items.Add(item);
-                }
-            }
-
-            return items;
         }
 
         private static void AsteroidTypeSearchbox_TextChanged(string newText)
