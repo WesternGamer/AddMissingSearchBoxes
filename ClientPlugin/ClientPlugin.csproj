@@ -532,7 +532,6 @@
     <Compile Include="Patches\FactionsMenuPatch.cs" />
     <Compile Include="Patches\GridInfoControllerPatch.cs" />
     <Compile Include="Patches\GridInfoMenuPatch.cs" />
-    <Compile Include="Patches\PatchHelpers.cs" />
     <Compile Include="Patches\SpawnMenuPatch.cs" />
     <Compile Include="Patches\TerminalChatMenuPatch.cs" />
     <Compile Include="Plugin.cs" />
